@@ -100,5 +100,5 @@ The output is in `build/`. For Vercel, import the repository and use:
 
 ## Notes
 
-- The build emits a few pre-existing ESLint warnings from Vanta, Particles, and icon-cloud hook usage; they do not block production builds.
+- The production build is ESLint-clean and passes with `CI=true`, as used by Vercel.
 - `src/App.test.tsx` is still the default Create React App starter test and should be updated before relying on tests.

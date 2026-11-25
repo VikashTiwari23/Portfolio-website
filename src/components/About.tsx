@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { info } from "../User";
 //@ts-ignore
 import DOTS from "vanta/src/vanta.dots";
@@ -12,53 +12,47 @@ import { Particles } from "./magicui/Particles";
 import NeonGradientCard from "./magicui/neon-gradient-card-demo";
 
 const About = () => {
-  const [dots, setDots] = useState<null | any>(null);
-  const [trunk, setTrunk] = useState<null | any>(null);
+  const dotsRef = useRef<any>(null);
+  const trunkRef = useRef<any>(null);
   const [opened, { open, close }] = useDisclosure(false);
   const [profileImage, setProfileImage] = useState("VikashTiwari.jpeg");
 
   useEffect(() => {
-    if (!dots) {
-      setDots(
-        DOTS({
-          el: "#bg",
-          mouseControls: true,
-          touchControls: true,
-          gyroControls: false,
-          minHeight: 200.0,
-          minWidth: 200.0,
-          scale: 1.0,
-          scaleMobile: 1.0,
-          color: 0x64ffda,
-          backgroundColor: 0x112240,
-          color2: 0x2064ff,
-          showLines: false,
-          size: 3,
-          spacing: 20.0,
-        }),
-      );
-    }
-    if (!trunk) {
-      setTrunk(
-        TRUNK({
-          el: "#photo",
-          mouseControls: true,
-          touchControls: true,
-          gyroControls: false,
-          minHeight: 200.0,
-          minWidth: 200.0,
-          scale: 1.0,
-          scaleMobile: 1.0,
-          color: 0x64ffda,
-          backgroundColor: 0x112240,
-          spacing: 0.0,
-          chaos: 4.0,
-        }),
-      );
-    }
+    dotsRef.current = DOTS({
+      el: "#bg",
+      mouseControls: true,
+      touchControls: true,
+      gyroControls: false,
+      minHeight: 200.0,
+      minWidth: 200.0,
+      scale: 1.0,
+      scaleMobile: 1.0,
+      color: 0x64ffda,
+      backgroundColor: 0x112240,
+      color2: 0x2064ff,
+      showLines: false,
+      size: 3,
+      spacing: 20.0,
+    });
+
+    trunkRef.current = TRUNK({
+      el: "#photo",
+      mouseControls: true,
+      touchControls: true,
+      gyroControls: false,
+      minHeight: 200.0,
+      minWidth: 200.0,
+      scale: 1.0,
+      scaleMobile: 1.0,
+      color: 0x64ffda,
+      backgroundColor: 0x112240,
+      spacing: 0.0,
+      chaos: 4.0,
+    });
+
     return () => {
-      if (dots) dots.destroy();
-      if (trunk) trunk.destroy();
+      dotsRef.current?.destroy();
+      trunkRef.current?.destroy();
     };
   }, []);
   return (

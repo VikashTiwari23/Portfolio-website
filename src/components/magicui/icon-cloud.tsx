@@ -4,7 +4,6 @@ import {
   fetchSimpleIcons,
   ICloud,
   renderSimpleIcon,
-  SimpleIcon,
 } from "react-icon-cloud";
 
 export const cloudProps: Omit<ICloud, "children"> = {
@@ -30,7 +29,6 @@ export const cloudProps: Omit<ICloud, "children"> = {
     outlineColour: "#0000",
     maxSpeed: 0.07,
     minSpeed: 0.05,
-    // Drag/spin speed can be adjusted here (e.g., in the video he adjusted speed & sizes)
   },
 };
 
@@ -51,7 +49,6 @@ export const renderCustomIcon = (icon: any, theme: string) => {
       rel: undefined,
       onClick: (e: any) => e.preventDefault(),
     },
-
   });
 };
 
@@ -60,6 +57,8 @@ export type DynamicCloudProps = {
 };
 
 type IconData = Awaited<ReturnType<typeof fetchSimpleIcons>>;
+
+const CloudComponent = Cloud as any;
 
 export default function IconCloud({ iconSlugs }: DynamicCloudProps) {
   const [data, setData] = useState<IconData | null>(null);
@@ -72,15 +71,9 @@ export default function IconCloud({ iconSlugs }: DynamicCloudProps) {
     if (!data) return null;
 
     return Object.values(data.simpleIcons).map((icon) =>
-      renderCustomIcon(icon, "dark")
+      renderCustomIcon(icon, "dark"),
     );
   }, [data]);
 
-  return (
-    // @ts-ignore
-    <Cloud {...cloudProps}>
-      //@ts-ignore
-      <>{renderedIcons}</>
-    </Cloud>
-  );
+  return <CloudComponent {...cloudProps}>{renderedIcons}</CloudComponent>;
 }
